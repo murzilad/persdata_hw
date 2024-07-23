@@ -13,7 +13,6 @@ import java.time.Duration;
 public abstract class AbsCommon {
 
     protected WebDriver driver = null;
-
     protected Waiters waiters = null;
 
     public AbsCommon(WebDriver driver) {

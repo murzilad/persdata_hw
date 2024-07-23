@@ -1,7 +1,6 @@
 import components.AuthorizationDataForm;
 import components.HeaderComponent;
 import components.PersonalDataForm;
-import components.popups.SearchPopup;
 import components.popups.UserInfoPopupMenu;
 import factory.WebDriverFactory;
 import org.apache.logging.log4j.LogManager;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 import pages.PersonalAccountPage;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class FillPersonalData_Test {
 
@@ -28,9 +25,10 @@ public class FillPersonalData_Test {
     @AfterEach //после каждого теста, если окно браузера не закрыто, то закрывается
     public void close() {
         logger.trace("Закрытие браузера начато");
-        if (driver!=null)
+        if (driver!=null) {
             driver.quit(); //close - текущ вкладка, quit - весь браузер со всеми вкладками
-        logger.trace("Закрытие браузера завершено");
+            logger.trace("Закрытие браузера завершено");
+        }
     }
 
     @Test
@@ -38,19 +36,26 @@ public class FillPersonalData_Test {
         MainPage mainPage = new MainPage(driver);
         mainPage.open();
 
-        new SearchPopup(driver).popupShouldNotBeVisible();
+        UserInfoPopupMenu userInfoPopupMenu = new UserInfoPopupMenu(driver);
 
         HeaderComponent headerComponent = new HeaderComponent(driver);
-        headerComponent.clickLoginButton()
-                .popupShouldBeVisible();
+
+        headerComponent
+                .clickLoginButton();
 
         AuthorizationDataForm authorizationDataForm = new AuthorizationDataForm(driver);
         authorizationDataForm.fillAuthorizationFields()
                 .authorizationShouldBeSuccessful();
 
-        UserInfoPopupMenu userInfoPopupMenu = new UserInfoPopupMenu(driver);
+        userInfoPopupMenu
+                .popupShouldNotBeVisible();
 
-        userInfoPopupMenu.moveToMenu()
+        userInfoPopupMenu
+                .moveToMenu()
+                .popupShouldBeVisible();
+
+        userInfoPopupMenu
+                .moveToMenu()
                 .clickMyProfileButton();
 
         new PersonalAccountPage(driver)
@@ -61,7 +66,6 @@ public class FillPersonalData_Test {
         personalDataForm.fillPersonalDataForm();
 
         driver.manage().deleteAllCookies();
-        assertThat(driver.manage().getCookies().isEmpty());
 
         mainPage.open();
         headerComponent.clickLoginButton();

@@ -1,7 +1,7 @@
 package components;
 
 import common.AbsCommon;
-import components.popups.SearchPopup;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,8 +15,7 @@ public class HeaderComponent extends AbsCommon {
     @FindBy(xpath = "//button[text() = 'Войти']")
     private WebElement loginButton;
 
-    public SearchPopup clickLoginButton() {
+    public void clickLoginButton() {
         loginButton.click();
-        return new SearchPopup(driver);
     }
 }

@@ -38,7 +38,6 @@ public class PersonalDataForm extends AbsCommon {
     private By englishLevelFieldLocator = By.xpath("//input[@name = 'english_level']/ancestor::div[contains (@class, 'select')]");
     private By englishLevelSelectValueSelector = By.cssSelector("button[title = 'Продвинутый (Advanced)']");
 
-
     private By addContactDropdownLocator = By.xpath("//div[./span[text() = 'Способ связи']]/following::div[1]");
     private By addContactFieldLocator = By.xpath("//div[./span[text() = 'Способ связи']]");
     private By contactSelectTgSelector = By.cssSelector("button[data-value = 'telegram']");
@@ -89,11 +88,10 @@ public class PersonalDataForm extends AbsCommon {
                 .isTrue();
     }
 
-    public boolean checkDropDownIsVisible(By locator) {
+    public void checkDropDownIsVisible(By locator) {
         assertThat(waitElementVisible(locator).getAttribute("class").contains("hide"))
                 .as("Error: element has no attribute")
                 .isFalse();
-        return false;
     }
 
     //заполнение поля с выпадающим списком
